@@ -18,7 +18,7 @@
         </v-card>
       </v-col>
 
-      <v-col v-for="(place, i) in places" :key="i" cols="12" >
+      <v-col v-for="(place, i) in mapResult" :key="i" cols="12" >
         <v-card :color="place.color" dark >
           <div class="d-flex flex-no-wrap justify-space-between">
             <div>
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
   name: "Card",
@@ -55,42 +55,38 @@ export default {
     "max_height"
   ],
   data: () => ({
-      items: [
-        {
-          color: '#1F7087',
-          src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
-          title: 'Supermodel',
-          artist: 'Foster the People',
-        },
-        {
-          color: '#952175',
-          src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
-          title: 'Halcyon Days',
-          artist: 'Ellie Goulding',
-        },
-      ],
-      places: ""
-    }),
+    items: [
+      {
+        color: "#1F7087",
+        src: "https://cdn.vuetifyjs.com/images/cards/foster.jpg",
+        title: "Supermodel",
+        artist: "Foster the People"
+      },
+      {
+        color: "#952175",
+        src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
+        title: "Halcyon Days",
+        artist: "Ellie Goulding"
+      }
+    ],
+    places: ""
+  }),
   computed: {
-    GET_INFO() {
-      return this.$store.state.mapResult;
-
-    }
+    ...mapState(["mapResult"])
   },
   methods: {
-    ...mapGetters(["GET_INFO"]),
     test() {
       this.places = this.GET_INFO.data;
       console.log(this.places[0].name);
     }
   }
-}
+};
 </script>
 
 <style lang="css" scoped>
-  .floating-card {
-    position: fixed;
-    border-radius: 45px;
-    background: white;
-  }
+.floating-card {
+  position: fixed;
+  border-radius: 45px;
+  background: white;
+}
 </style>
