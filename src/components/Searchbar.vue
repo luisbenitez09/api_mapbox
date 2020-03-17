@@ -14,12 +14,6 @@
         @input="search()"
       />
     </v-col>
-    <!--
-    <v-btn id="btn" @click="search" elevation="20" color="green" rounded dark icon large>
-      <v-icon>mdi-magnify</v-icon>
-    </v-btn> -->
-
-
   </v-row>
 </template>
 
@@ -38,7 +32,6 @@ export default {
     ...mapMutations(["SET_MAP_RESULT"]),
     search() {
       //Obtencion de datos
-
       axios
         .get("http://localhost:3000/busqueda/", {
           params: {
@@ -46,10 +39,8 @@ export default {
           }
         })
         .then(response => {
-          console.log(response);
+          console.log(response.data.data);
           this.SET_MAP_RESULT(response.data.data);
-
-          //var cantidad = response.data.data.length;
         })
         .catch(error => {
           console.log(error);

@@ -13,7 +13,7 @@
           <v-card-title class="headline">Busca tus lugares favoritos</v-card-title>
           <v-card-subtitle>Encuentra los mejores lugares de La Paz, Baja California Sur.</v-card-subtitle>
           <v-card-actions>
-            <v-btn text @click="test">Ver más</v-btn>
+            <v-btn text >Ver más</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -54,31 +54,8 @@ export default {
     "min_height",
     "max_height"
   ],
-  data: () => ({
-    items: [
-      {
-        color: "#1F7087",
-        src: "https://cdn.vuetifyjs.com/images/cards/foster.jpg",
-        title: "Supermodel",
-        artist: "Foster the People"
-      },
-      {
-        color: "#952175",
-        src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
-        title: "Halcyon Days",
-        artist: "Ellie Goulding"
-      }
-    ],
-    places: ""
-  }),
   computed: {
     ...mapState(["mapResult"])
-  },
-  methods: {
-    test() {
-      this.places = this.GET_INFO.data;
-      console.log(this.places[0].name);
-    }
   }
 };
 </script>
