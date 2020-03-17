@@ -24,15 +24,15 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
-import axios from 'axios'
+import { mapMutations } from "vuex";
+import axios from "axios";
 
 export default {
   name: "Serachbar",
   data() {
     return {
       busqueda: ""
-    }
+    };
   },
   methods: {
     ...mapMutations(["SET_MAP_RESULT"]),
@@ -40,32 +40,31 @@ export default {
       //Obtencion de datos
 
       axios
-      .get("http://localhost:3000/busqueda/", {
-        params: {
-          search: this.busqueda
-        }
-      })
-      .then(response => {
-        this.SET_MAP_RESULT(response.data);
-        
-        //var cantidad = response.data.data.length;
-      })
-      .catch( error => {
-        console.log(error);
-      });
+        .get("http://localhost:3000/busqueda/", {
+          params: {
+            search: this.busqueda
+          }
+        })
+        .then(response => {
+          console.log(response);
+          this.SET_MAP_RESULT(response.data.data);
+
+          //var cantidad = response.data.data.length;
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   }
-}
+};
 </script>
 
 <style lang="css" scoped>
+.bar {
+  align-items: center;
+}
 
-  .bar {
-    align-items: center;
-  }
-
-  #btn {
-    margin-left: 30px;
-  }
-
+#btn {
+  margin-left: 30px;
+}
 </style>
