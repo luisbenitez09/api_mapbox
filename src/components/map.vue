@@ -27,11 +27,18 @@
     },
     watch: {
       mapPin() {
+        this.map.addControl(new mapboxgl.NavigationControl());
         this.marker = new mapboxgl.Marker({
           draggable: false
         })
         .setLngLat([this.mapPin[0].long,this.mapPin[0].lat])
         .addTo(this.map);
+
+        this.map.flyTo({
+          center: [this.mapPin[0].long,this.mapPin[0].lat],
+          zoom: 15
+        });
+
       }
     }
   }
