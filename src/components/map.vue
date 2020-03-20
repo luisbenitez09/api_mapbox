@@ -13,23 +13,21 @@
     data() {
       return {
         map: null,
-        marker: null
+        marker : new mapboxgl.Marker()
       }
     },
     computed: {
       ...mapState(["mapPin"])
     },
-    mounted() {
-      this.map = new mapboxgl.Map({
-      container: this.id,
-      style: 'mapbox://styles/lbenitez/ck7vfxqkl03uh1iqjp5b1kee5'
-    });
-    },
     watch: {
       mapPin() {
-        this.map.addControl(new mapboxgl.NavigationControl());
+
+        this.marker.remove();
         this.marker = new mapboxgl.Marker({
-          draggable: false
+          draggable: false,
+          color: "red",
+          anchor: 'left'
+
         })
         .setLngLat([this.mapPin[0].long,this.mapPin[0].lat])
         .addTo(this.map);
@@ -40,6 +38,12 @@
         });
 
       }
+    },
+      mounted() {
+      this.map = new mapboxgl.Map({
+      container: this.id,
+      style: 'mapbox://styles/lbenitez/ck80nhopu0yu61ipeuegtbt63'
+    });
     }
   }
 </script>
@@ -49,4 +53,12 @@
     width: 100%;
     height: 100%;
   }
+  .marker {
+  background-image: url('./../assets/mapbox-icon.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
 </style>
