@@ -12,7 +12,8 @@
     props:["id"],
     data() {
       return {
-        map: null
+        map: null,
+        marker: null
       }
     },
     computed: {
@@ -25,18 +26,14 @@
     });
     },
     watch: {
-    mapPin() {
-      console.log("Change detected");
-
-      this.map.addControl(new mapboxgl.NavigationControl());
-
-      var marker = new mapboxgl.Marker({
-        draggable: false
-      })
-      .setLngLat([this.mapPin[0].long,this.mapPin[0].lat])
-      .addTo(this.map);
+      mapPin() {
+        this.marker = new mapboxgl.Marker({
+          draggable: false
+        })
+        .setLngLat([this.mapPin[0].long,this.mapPin[0].lat])
+        .addTo(this.map);
+      }
     }
-}
   }
 </script>
 
