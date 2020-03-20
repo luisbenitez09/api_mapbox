@@ -16,14 +16,27 @@
       }
     },
     computed: {
-      ...mapState(["mapResults"])
+      ...mapState(["mapPin"])
     },
     mounted() {
       this.map = new mapboxgl.Map({
       container: this.id,
       style: 'mapbox://styles/lbenitez/ck7vfxqkl03uh1iqjp5b1kee5'
-  });
+    });
+    },
+    watch: {
+    mapPin() {
+      console.log("Change detected");
+
+      this.map.addControl(new mapboxgl.NavigationControl());
+
+      var marker = new mapboxgl.Marker({
+        draggable: false
+      })
+      .setLngLat([this.mapPin[0].long,this.mapPin[0].lat])
+      .addTo(this.map);
     }
+}
   }
 </script>
 

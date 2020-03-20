@@ -39,7 +39,6 @@ export default {
           }
         })
         .then(response => {
-          console.log(response.data.data);
           this.SET_MAP_RESULT(response.data.data);
         })
         .catch(error => {

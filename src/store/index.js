@@ -5,16 +5,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    mapResult: []
+    mapResult: [],
+    mapPin: []
   },
   mutations: {
     SET_MAP_RESULT(state, payload) {
       state.mapResult = payload;
-    }
-  },
-  getters: {
-    GET_INFO: state => {
-      return state.mapResult;
+    },
+    SET_MAP_PIN(state, payload) {
+      state.mapPin = payload;
     }
   },
   actions: {

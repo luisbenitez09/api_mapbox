@@ -25,7 +25,7 @@
       min_width="450"
       max_width="500"
       min_height="120"
-      max_height="850">
+      max_height="1850">
 
       </Card>
     </v-content>
