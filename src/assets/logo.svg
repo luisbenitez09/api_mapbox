@@ -1,1 +1,20 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 87.5 100"><defs><style>.cls-1{fill:#1697f6;}.cls-2{fill:#7bc6ff;}.cls-3{fill:#1867c0;}.cls-4{fill:#aeddff;}</style></defs><title>Artboard 46</title><polyline class="cls-1" points="43.75 0 23.31 0 43.75 48.32"/><polygon class="cls-2" points="43.75 62.5 43.75 100 0 14.58 22.92 14.58 43.75 62.5"/><polyline class="cls-3" points="43.75 0 64.19 0 43.75 48.32"/><polygon class="cls-4" points="64.58 14.58 87.5 14.58 43.75 100 43.75 62.5 64.58 14.58"/></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 87.5 100" style="enable-background:new 0 0 87.5 100;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#1867C0;}
+	.st1{fill:#1697F6;}
+	.st2{fill:#FFFFFF;}
+	.st3{fill:none;}
+</style>
+<title>Artboard 46</title>
+<polygon class="st0" points="43.8,62.5 43.8,100 0,14.6 22.9,14.6 "/>
+<polygon class="st1" points="64.6,14.6 87.5,14.6 43.8,100 43.8,62.5 "/>
+<path class="st1" d="M43.8,29.9L43.8,29.9V0.3c0.2,0,0.4,0,0.6,0c3,0.2,5.1,1.4,5.9,2c3,2.8,4,5.5,4.4,7
+	C56.4,16.2,52.1,24.6,43.8,29.9z"/>
+<path class="st0" d="M43.8,0.3v29.7c-8.5-5.4-12.6-13.8-10.7-20.8c0.4-1.5,1.5-4.3,4.7-7C38.5,1.6,40.7,0.3,43.8,0.3z"/>
+<polygon class="st2" points="43.7,5.2 45.9,9.6 50.5,11.9 46.3,14 43.7,18.9 42,14.5 37.1,12.1 41.8,9.9 "/>
+<line class="st3" x1="43.8" y1="0.3" x2="43.8" y2="-3.3"/>
+<line class="st3" x1="43.8" y1="60.3" x2="43.8" y2="40.7"/>
+</svg>

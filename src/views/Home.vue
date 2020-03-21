@@ -1,16 +1,16 @@
 <template>
   <v-app>
-    <v-app-bar app dark color="blue">
+    <v-app-bar app dark color="blue darken-4">
       <div class="d-flex align-center">
         <v-img
           alt="Vuetify Logo"
           class="shrink mr-2"
           contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+          src="./../assets/logo.svg"
           transition="scale-transition"
           width="40"
         />
-        <h1>Vue.js</h1>
+        <h1>e-Map</h1>
       </div>
       <v-spacer />
       <searchbar/>
@@ -25,7 +25,7 @@
       min_width="450"
       max_width="500"
       min_height="120"
-      max_height="1850">
+      max_height="550">
 
       </Card>
     </v-content>
