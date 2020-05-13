@@ -2,10 +2,11 @@
     <v-card
     class="floating-card" :style="styles || ''"
     :elevation="elevation"
-    :min-width="min_width"
-    :max-width="max_width"
-    :max-height="max_height"
-    :min-height="min_height"
+    :min-width="min-width"
+    :max-width="max-width"
+    :max-height="max-height"
+    :min-height="min-height"
+    :background-color="background-color"
     >
 
     <v-container >
@@ -103,7 +104,8 @@ export default {
     "min_width",
     "max_width",
     "min_height",
-    "max_height"
+    "max_height",
+    "background-color",
   ],
   computed: {
     ...mapState(["mapResult"] )
@@ -141,7 +143,7 @@ export default {
 .floating-card {
   position: fixed;
   border-radius: 45px;
-  background: white;
+  background-color: #3f4555;
   overflow:hidden;
   overflow-x:hidden;
   overflow-y:scroll;

@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app dark color="blue darken-4">
+    <v-app-bar app dark color="#181e2c">
       <div class="d-flex align-center">
         <v-img
           alt="Vuetify Logo"
@@ -10,7 +10,7 @@
           transition="scale-transition"
           width="40"
         />
-        <h1>e-Map</h1>
+        <h1>sMap</h1>
       </div>
       <v-spacer />
       <searchbar/>
@@ -22,10 +22,11 @@
       <Card
       styles="top: 80px; left: 15px"
       elevation="20"
-      min_width="450"
-      max_width="500"
-      min_height="120"
-      max_height="550">
+      min-width="450"
+      max-width="500"
+      min-height="120"
+      max-height="550"
+      background-color="#3f4555">
 
       </Card>
     </v-content>
