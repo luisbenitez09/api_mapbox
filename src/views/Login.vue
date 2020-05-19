@@ -4,7 +4,7 @@
       <v-container fluid id="container">
         <v-container fluid id="leftSide">
           <v-img src="./../assets/background_login.png" id="imgLeft"></v-img>
-          <img id="logo" width="60px" src="./../assets/logo.svg" alt="myName">
+          <img id="logo" width="130px" src="./../assets/maap.svg" alt="MAAP">
           <h1 id="title">
             The Next-Gen
             <br />Map Services
@@ -17,11 +17,11 @@
             <v-form>
               <v-container>
                 <v-row>
-                  <v-text-field 
+                  <v-text-field
                   id="emailInput"
-                  v-model="email" 
-                  :rules="emailRules" 
-                  label="Email" 
+                  v-model="email"
+                  :rules="emailRules"
+                  label="Email"
                   required
                   dark
                   color="success"
@@ -47,7 +47,7 @@
           </v-container>
           <router-link to="/Register">
             <v-btn id="signBtn" text dark color="gray" rounded >
-              Sign Up <v-icon right>mdi-account</v-icon> 
+              Sign Up <v-icon right>mdi-account</v-icon>
             </v-btn>
           </router-link>
           <span id="waterMark">María Meza y Luis Benitez</span>

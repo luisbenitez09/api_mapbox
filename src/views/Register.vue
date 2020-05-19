@@ -4,7 +4,7 @@
       <v-container fluid id="container">
         <v-container fluid id="leftSide">
           <v-img src="./../assets/background_login.png" id="imgLeft"></v-img>
-          <img id="logo" width="60px" src="./../assets/logo.svg" alt="myName" />
+          <img id="logo" width="130px" src="./../assets/maap.svg" alt="MAAP" />
           <h1 id="title">
             The Next-Gen
             <br />Map Services
@@ -86,7 +86,7 @@ export default {
     }
   }),
   methods: {
-    
+
   }
 };
 </script>
