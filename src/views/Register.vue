@@ -4,7 +4,7 @@
       <v-container fluid id="container">
         <v-container fluid id="leftSide">
           <v-img src="./../assets/background_login.png" id="imgLeft"></v-img>
-          <img id="logo" width="60px" src="./../assets/logo.svg" alt="myName">
+          <img id="logo" width="60px" src="./../assets/logo.svg" alt="myName" />
           <h1 id="title">
             The Next-Gen
             <br />Map Services
@@ -12,19 +12,27 @@
         </v-container>
         <v-container fluid id="rightSide">
           <v-container id="loginForm">
-            <h2>Welcome</h2>
-            <h3>Sign In</h3>
+              <h2>Sign Up</h2>
+            <h3>Create an account</h3>
             <v-form>
               <v-container>
                 <v-row>
-                  <v-text-field 
-                  id="emailInput"
-                  v-model="email" 
-                  :rules="emailRules" 
-                  label="Email" 
-                  required
-                  dark
-                  color="success"
+                  <v-text-field
+                    id="nameInput"
+                    v-model="name"
+                    label="Full Name"
+                    required
+                    dark
+                    color="success"
+                  ></v-text-field>
+                  <v-text-field
+                    id="emailInput"
+                    v-model="email"
+                    :rules="emailRules"
+                    label="Email"
+                    required
+                    dark
+                    color="success"
                   ></v-text-field>
                   <v-text-field
                     id="passInput"
@@ -42,12 +50,15 @@
                 <v-row>
                   <v-btn id="loginBtn" block color="primary">Login</v-btn>
                 </v-row>
+                <v-row id="socialRow">
+                  <button class="button" @click="logInWithFacebook()">Login with Facebook</button>
+                </v-row>
               </v-container>
             </v-form>
           </v-container>
-          <router-link to="/Register">
-            <v-btn id="signBtn" text dark color="gray" rounded >
-              Sign Up <v-icon right>mdi-account</v-icon> 
+          <router-link to="/">
+            <v-btn id="signBtn" text dark color="gray" rounded>
+                Sign In <v-icon right>mdi-account</v-icon>
             </v-btn>
           </router-link>
           <span id="waterMark">María Meza y Luis Benitez</span>
@@ -59,20 +70,24 @@
 
 <script>
 export default {
-  name: "Login",
+  name: "Register",
   data: () => ({
-    valid: true,
+    name: "",
     email: "",
+    password: "",
+    valid: true,
+    showPass: false,
     emailRules: [
       v => !!v || "Ingresa tu email",
       v => /.+@.+\..+/.test(v) || "Ingresa un email válido"
     ],
-    password: "",
-    showPass: false,
     passRules: {
-          required: value => !!value || 'Necesitas tu password',
-        },
-  })
+      required: value => !!value || "Necesitas tu password"
+    }
+  }),
+  methods: {
+    
+  }
 };
 </script>
 
@@ -115,7 +130,7 @@ export default {
 
 #loginForm {
   width: 50%;
-  height: 60vh;
+  height: 70vh;
   position: absolute;
   top: 10%;
   left: 10%;
@@ -130,11 +145,11 @@ h2 {
 h3{
   font-family: "Montserrat";
   color: gray;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 
 #loginBtn {
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 #signBtn {
@@ -154,11 +169,20 @@ h3{
   position: absolute;
   bottom: 2%;
   left: 1%;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
 }
 
-.router-link {
+#socialRow {
+    margin-top: 30px;
+}
+
+.button {
   color: white;
+  min-width: 150px;
+  background-color: #3b5998;
+  height: 2.5rem;
+  border-radius: 2rem;
+  font-weight: 400;
+  font-size: 0.8rem;
 }
-
 </style>
