@@ -22,11 +22,11 @@
       <Card
       styles="top: 80px; left: 15px"
       elevation="20"
-      min-width="450"
-      max-width="500"
-      min-height="120"
-      max-height="550"
-      background-color="#3f4555">
+      min_width="450"
+      max_width="500"
+      min_height="120"
+      max_height="550"
+      >
 
       </Card>
     </v-content>
