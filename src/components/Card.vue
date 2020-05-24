@@ -11,7 +11,7 @@
     <v-container >
     <v-row dense>
 
-    <v-card cols="12" v-if="!selected" width="480">
+    <v-card cols="12" v-if="weatherWidget" width="480">
       <v-list-item two-line>
         <v-list-item-content>
           <v-list-item-title class="headline">La Paz</v-list-item-title>
@@ -36,50 +36,11 @@
     </v-card>
 
       <v-col v-for="(place, i) in mapResult" :key="i" cols="12" >
-        <v-card :color="place.color" dark >
-          <div class="d-flex flex-no-wrap justify-space-between">
-            <div>
-              <v-card-title class="headline" v-text="place.name"></v-card-title>
-              <v-card-subtitle v-text="place.dir"></v-card-subtitle>
-              <v-card-actions>
-                <v-btn text @click="seleccionar(i)" id="btn">Ver más</v-btn>
-              </v-card-actions>
-
-
-              <v-card-text v-if="selected" :id="i.lat">
-                <v-row align="center" class="mx-0">
-                  <v-rating
-                    :value="place.rank"
-                    color="amber"
-                    dense
-                    half-increments
-                    readonly
-                    size="14"
-                  ></v-rating>
-                  <div class="grey--text ml-4">{{place.rank}}</div>
-                </v-row>
-
-                <div class="my-4 subtitle-1">
-                  {{place.price}} • {{place.cat}}
-                </div>
-
-                <div>{{place.desc}}</div>
-                <v-card-actions>
-                <v-btn text @click="seleccionar(i)" id="btn">Eliminar</v-btn>
-              </v-card-actions>
-              </v-card-text>
-
-
-
-            </div>
-
-            <v-avatar class="ma-3" size="125" tile >
-               <v-img :src="place.img"></v-img>
-            </v-avatar>
-
-          </div>
-
-        </v-card>
+        <CardPlace
+          :place="place"
+          :i="i"
+        >
+        </CardPlace>
       </v-col>
 
     </v-row>
@@ -88,6 +49,7 @@
 </template>
 
 <script>
+import CardPlace from './../components/CardPlace'
 import { mapState } from "vuex";
 import { mapMutations } from "vuex";
 
@@ -95,9 +57,7 @@ export default {
   name: "Card",
   data() {
     return {
-      selected: false,
-      lat: "",
-      long: ""
+      selected: true,
     }
   },
   props: [
@@ -107,37 +67,23 @@ export default {
     "max_width",
     "min_height",
     "max_height",
-    "background-color",
   ],
+  components: {
+    CardPlace,
+  },
   computed: {
-    ...mapState(["mapResult"] )
+    ...mapState(["mapResult", "weatherWidget"] )
+
+  },
+  methods: {
+    ...mapMutations(["SET_WIDGET"]),
 
   },
   watch: {
     mapResult() {
-      this.selected = false;
-    }
+      this.SET_WIDGET(false);
+    },
   },
-  methods: {
-    ...mapMutations(["SET_MAP_PIN"]),
-    seleccionar(aux) {
-      if (this.selected) {
-        this.selected = false;
-        document.getElementById('btn').innerHTML = "Ver más"
-      } else {
-        this.selected = true;
-        document.getElementById('btn').innerHTML = "Ver menos"
-      }
-
-      var myJSON = [
-        {
-          lat: this.mapResult[aux].lat,
-          long: this.mapResult[aux].long
-        }
-      ];
-      this.SET_MAP_PIN(myJSON);
-    }
-  }
 };
 </script>
 
@@ -146,9 +92,6 @@ export default {
   position: fixed;
   border-radius: 45px;
   background-color: #3f4555;
-  overflow:hidden;
   overflow-x:hidden;
-  overflow-y:scroll;
-  overflow:-moz-scrollbars-vertical;
 }
 </style>

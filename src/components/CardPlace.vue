@@ -1,11 +1,11 @@
 <template lang="html">
-        <v-card :color="place.color" dark >
+        <v-card :color="place.color" :place="place" :i="i" dark >
           <div class="d-flex flex-no-wrap justify-space-between">
             <div>
               <v-card-title class="headline" v-text="place.name"></v-card-title>
               <v-card-subtitle v-text="place.dir"></v-card-subtitle>
               <v-card-actions>
-                <v-btn text @click="seleccionar(i)" id="btn">Ver más</v-btn>
+                <v-btn text @click="seleccionar(i)">{{btn}}</v-btn>
               </v-card-actions>
 
 
@@ -50,22 +50,18 @@ import { mapState } from "vuex";
 import { mapMutations } from "vuex";
 
 export default {
-  name: "Card",
+  name: "CardPlace",
   data() {
     return {
       selected: false,
       lat: "",
-      long: ""
+      long: "",
+      btn: "Ver más",
     }
   },
   props: [
-    "styles",
-    "elevation",
-    "min_width",
-    "max_width",
-    "min_height",
-    "max_height",
-    "background-color",
+    "place",
+    "i"
   ],
   computed: {
     ...mapState(["mapResult"] )
@@ -74,6 +70,7 @@ export default {
   watch: {
     mapResult() {
       this.selected = false;
+      this.btn = "Ver más";
     }
   },
   methods: {
@@ -81,10 +78,10 @@ export default {
     seleccionar(aux) {
       if (this.selected) {
         this.selected = false;
-        document.getElementById('btn').innerHTML = "Ver más"
+        this.btn = "Ver más";
       } else {
         this.selected = true;
-        document.getElementById('btn').innerHTML = "Ver menos"
+        this.btn = "Ver menos";
       }
 
       var myJSON = [
@@ -100,13 +97,5 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.floating-card {
-  position: fixed;
-  border-radius: 45px;
-  background-color: #3f4555;
-  overflow:hidden;
-  overflow-x:hidden;
-  overflow-y:scroll;
-  overflow:-moz-scrollbars-vertical;
-}
+
 </style>

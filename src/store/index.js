@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     mapResult: [],
-    mapPin: []
+    mapPin: [],
+    weatherWidget: true,
   },
   mutations: {
     SET_MAP_RESULT(state, payload) {
@@ -14,6 +15,13 @@ export default new Vuex.Store({
     },
     SET_MAP_PIN(state, payload) {
       state.mapPin = payload;
+    },
+    SET_WIDGET(state, payload) {
+      if (state.mapResult.length == 0){
+        state.weatherWidget = true;
+      } else {
+        state.weatherWidget = payload;
+      }
     }
   },
   actions: {
