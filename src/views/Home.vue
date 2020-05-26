@@ -15,6 +15,31 @@
       <v-spacer />
       <searchbar/>
       <v-spacer />
+      <v-menu
+        left
+        bottom
+      >
+        <template v-slot:activator="{ on }">
+          <v-btn icon v-on="on">
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list>
+          <v-list-item @click="() => {}">
+            <v-list-item-title>Ver mi ubicación</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="() => {}">
+            <v-list-item-title>Ver mi lugares</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="() => {}">
+            <v-list-item-title>Registrar nuevo lugar</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="() => {}">
+            <v-list-item-title>Cerrar Sesión</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
 
     <v-content id="map-conatainer">

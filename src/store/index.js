@@ -8,6 +8,7 @@ export default new Vuex.Store({
     mapResult: [],
     mapPin: [],
     weatherWidget: true,
+    userToken: "",
   },
   mutations: {
     SET_MAP_RESULT(state, payload) {
@@ -22,7 +23,10 @@ export default new Vuex.Store({
       } else {
         state.weatherWidget = payload;
       }
-    }
+    },
+    SET_TOKEN(state, payload) {
+      state.userToken = payload;
+    },
   },
   actions: {
   },

@@ -20,8 +20,8 @@
                   <v-text-field
                     id="nameInput"
                     v-model="name"
+                    :rules="[nameRules.required]"
                     label="Full Name"
-                    required
                     dark
                     color="success"
                   ></v-text-field>
@@ -30,7 +30,6 @@
                     v-model="email"
                     :rules="emailRules"
                     label="Email"
-                    required
                     dark
                     color="success"
                   ></v-text-field>
@@ -38,7 +37,7 @@
                     id="passInput"
                     v-model="password"
                     :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
-                    :rules="[passRules.required]"
+                    :rules="[passRules.required, passRules.min]"
                     :type="showPass ? 'text' : 'password'"
                     name="input-pass"
                     label="Password"
@@ -48,11 +47,9 @@
                   ></v-text-field>
                 </v-row>
                 <v-row>
-                  <v-btn id="loginBtn" block color="primary">Login</v-btn>
+                  <v-btn id="loginBtn" block color="primary" @click="register">Register</v-btn>
                 </v-row>
-                <v-row id="socialRow">
-                  <button class="button" @click="logInWithFacebook()">Login with Facebook</button>
-                </v-row>
+
               </v-container>
             </v-form>
           </v-container>
@@ -69,24 +66,51 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Register",
   data: () => ({
-    name: "",
+    name: null,
     email: "",
     password: "",
-    valid: true,
     showPass: false,
     emailRules: [
-      v => !!v || "Ingresa tu email",
-      v => /.+@.+\..+/.test(v) || "Ingresa un email válido"
+      v => !!v || "Email required",
+      v => /.+@.+\..+/.test(v) || "Type a valid email!"
     ],
     passRules: {
-      required: value => !!value || "Necesitas tu password"
+      required: value => !!value || "Password required!",
+      min: v => v.length >= 8 || 'Min 8 characters!',
+    },
+    nameRules: {
+      required: value => !!value || "Name required!"
     }
   }),
   methods: {
+    register() {
+      if (this.name && /.+@.+\..+/.test(this.email) && this.password.length >= 8) {
+        console.log("datos validados");
+        axios
+        .post("http://localhost:3000/usuarios/register", {
+            
+              fullName: this.name,
+              email: this.email,
+              password: this.password
+            
+          })
+          
+          .catch(error => {
+            console.log(error);
+          });
+          this.$router.push({ name: "Login"});
+      } else {
+        console.log("Datos no validos para ingresar.")
+      }
+      
 
+      
+    }
   }
 };
 </script>
