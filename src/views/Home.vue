@@ -27,16 +27,13 @@
 
         <v-list>
           <v-list-item @click="() => {}">
-            <v-list-item-title>Ver mi ubicación</v-list-item-title>
+            <v-list-item-title>Register new place</v-list-item-title>
           </v-list-item>
           <v-list-item @click="() => {}">
-            <v-list-item-title>Ver mi lugares</v-list-item-title>
+            <v-list-item-title>My places</v-list-item-title>
           </v-list-item>
-          <v-list-item @click="() => {}">
-            <v-list-item-title>Registrar nuevo lugar</v-list-item-title>
-          </v-list-item>
-          <v-list-item @click="() => {}">
-            <v-list-item-title>Cerrar Sesión</v-list-item-title>
+          <v-list-item @click="logout">
+            <v-list-item-title>Log Out</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -63,6 +60,7 @@
 import Card from './../components/Card'
 import Searchbar from './../components/Searchbar'
 import mapa from './../components/map'
+import { mapMutations } from "vuex";
 
 export default {
   name: 'Home',
@@ -70,6 +68,13 @@ export default {
     mapa,
     Card,
     Searchbar
+  },
+  methods: {
+    ...mapMutations(["SET_TOKEN"]),
+    logout() {
+      this.SET_TOKEN("");
+      this.$router.push({ name: "Login"});
+    }
   }
 }
 </script>

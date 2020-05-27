@@ -40,7 +40,7 @@
                   ></v-text-field>
                 </v-row>
                 <v-row>
-                  <v-btn id="loginBtn" block color="primary">Login</v-btn>
+                  <v-btn id="loginBtn" block color="primary" @click="login">Login</v-btn>
                 </v-row>
               </v-container>
             </v-form>
@@ -58,21 +58,48 @@
 </template>
 
 <script>
+
+import axios from 'axios';
+import { mapMutations } from "vuex";
+
 export default {
   name: "Login",
   data: () => ({
     valid: true,
     email: "",
     emailRules: [
-      v => !!v || "Ingresa tu email",
-      v => /.+@.+\..+/.test(v) || "Ingresa un email válido"
+      v => !!v || "Email required",
+      v => /.+@.+\..+/.test(v) || "Type a valid email"
     ],
     password: "",
     showPass: false,
     passRules: {
-          required: value => !!value || 'Necesitas tu password',
+          required: value => !!value || 'Password required',
+          min: v => v.length >= 8 || "Min 8 characters"
         },
-  })
+  }),
+  methods: {
+    ...mapMutations(["SET_TOKEN"]),
+    login() {
+      if (/.+@.+\..+/.test(this.email) && this.password.length >= 8) {
+        console.log("Datos validos");
+        axios
+        .post("http://localhost:3000/usuarios/login",
+        {
+            email: this.email,
+            password: this.password
+        }).then(response => {
+          this.SET_TOKEN(response.data.data.token);
+          this.$router.push({ name: "Home"});
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      }else {
+        console.log("Datos no validos para ingresar.");
+      }
+    }
+  },
 };
 </script>
 
