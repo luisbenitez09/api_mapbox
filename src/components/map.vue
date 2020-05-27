@@ -4,6 +4,7 @@
 
 <script>
   import { mapState } from 'vuex'
+  import 'mapbox-gl/dist/mapbox-gl.css'
 
   var mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
   mapboxgl.accessToken = 'pk.eyJ1IjoibGJlbml0ZXoiLCJhIjoiY2szdHU1czY0MDFpdTNsdDQwOGxuNHJyOSJ9.tEeMwOIWSuwmQF4eDcDrsw';
@@ -21,7 +22,7 @@
     },
     watch: {
       mapPin() {
-
+      
         this.marker.remove();
         this.marker = new mapboxgl.Marker({
           draggable: false,
@@ -44,6 +45,13 @@
       container: this.id,
       style: 'mapbox://styles/lbenitez/ck80nhopu0yu61ipeuegtbt63'
     });
+    this.map.addControl(new mapboxgl.NavigationControl());
+    this.map.addControl(new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+        trackUserLocation: true
+    }));
     }
   }
 </script>
