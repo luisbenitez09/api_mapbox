@@ -4,7 +4,7 @@
       <v-container fluid id="container">
         <v-container fluid id="leftSide">
           <v-img src="./../assets/background_login.png" id="imgLeft"></v-img>
-          <img id="logo" width="130px" src="./../assets/maap.svg" alt="MAAP">
+          <img id="logo" width="130px" src="./../assets/maap.svg" alt="MAAP" />
           <h1 id="title">
             The Next-Gen
             <br />Map Services
@@ -18,13 +18,13 @@
               <v-container>
                 <v-row>
                   <v-text-field
-                  id="emailInput"
-                  v-model="email"
-                  :rules="emailRules"
-                  label="Email"
-                  required
-                  dark
-                  color="success"
+                    id="emailInput"
+                    v-model="email"
+                    :rules="emailRules"
+                    label="Email"
+                    required
+                    dark
+                    color="success"
                   ></v-text-field>
                   <v-text-field
                     id="passInput"
@@ -46,8 +46,9 @@
             </v-form>
           </v-container>
           <router-link to="/Register">
-            <v-btn id="signBtn" text dark color="gray" rounded >
-              Sign Up <v-icon right>mdi-account</v-icon>
+            <v-btn id="signBtn" text dark color="gray" rounded>
+              Sign Up
+              <v-icon right>mdi-account</v-icon>
             </v-btn>
           </router-link>
           <span id="waterMark">María Meza y Luis Benitez</span>
@@ -58,8 +59,7 @@
 </template>
 
 <script>
-
-import axios from 'axios';
+import axios from "axios";
 import { mapMutations } from "vuex";
 
 export default {
@@ -74,9 +74,9 @@ export default {
     password: "",
     showPass: false,
     passRules: {
-          required: value => !!value || 'Password required',
-          min: v => v.length >= 8 || "Min 8 characters"
-        },
+      required: value => !!value || "Password required",
+      min: v => v.length >= 8 || "Min 8 characters"
+    }
   }),
   methods: {
     ...mapMutations(["SET_TOKEN"]),
@@ -84,22 +84,22 @@ export default {
       if (/.+@.+\..+/.test(this.email) && this.password.length >= 8) {
         console.log("Datos validos");
         axios
-        .post("http://localhost:3000/usuarios/login",
-        {
+          .post("http://localhost:3000/usuarios/login", {
             email: this.email,
             password: this.password
-        }).then(response => {
-          this.SET_TOKEN(response.data.data.token);
-          this.$router.push({ name: "Home"});
-        })
-        .catch(error => {
-          console.log(error);
-        });
-      }else {
+          })
+          .then(response => {
+            this.SET_TOKEN(response.data.data.token);
+            this.$router.push({ name: "Home" });
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      } else {
         console.log("Datos no validos para ingresar.");
       }
     }
-  },
+  }
 };
 </script>
 
@@ -154,7 +154,7 @@ h2 {
   font-size: 40px;
 }
 
-h3{
+h3 {
   font-family: "Montserrat";
   color: gray;
   margin-bottom: 50px;
@@ -181,11 +181,10 @@ h3{
   position: absolute;
   bottom: 2%;
   left: 1%;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
 }
 
 .router-link {
   color: white;
 }
-
 </style>

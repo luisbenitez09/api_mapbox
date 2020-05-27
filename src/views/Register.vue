@@ -12,7 +12,7 @@
         </v-container>
         <v-container fluid id="rightSide">
           <v-container id="loginForm">
-              <h2>Sign Up</h2>
+            <h2>Sign Up</h2>
             <h3>Create an account</h3>
             <v-form>
               <v-container>
@@ -49,13 +49,13 @@
                 <v-row>
                   <v-btn id="loginBtn" block color="primary" @click="register">Register</v-btn>
                 </v-row>
-
               </v-container>
             </v-form>
           </v-container>
           <router-link to="/">
             <v-btn id="signBtn" text dark color="gray" rounded>
-                Sign In <v-icon right>mdi-account</v-icon>
+              Sign In
+              <v-icon right>mdi-account</v-icon>
             </v-btn>
           </router-link>
           <span id="waterMark">María Meza y Luis Benitez</span>
@@ -81,7 +81,7 @@ export default {
     ],
     passRules: {
       required: value => !!value || "Password required!",
-      min: v => v.length >= 8 || 'Min 8 characters!',
+      min: v => v.length >= 8 || "Min 8 characters!"
     },
     nameRules: {
       required: value => !!value || "Name required!"
@@ -92,24 +92,18 @@ export default {
       if (this.name && /.+@.+\..+/.test(this.email) && this.password.length >= 8) {
         console.log("datos validados");
         axios
-        .post("http://localhost:3000/usuarios/register", {
-            
-              fullName: this.name,
-              email: this.email,
-              password: this.password
-            
+          .post("http://localhost:3000/usuarios/register", {
+            fullName: this.name,
+            email: this.email,
+            password: this.password
           })
-          
           .catch(error => {
             console.log(error);
           });
           this.$router.push({ name: "Login"});
       } else {
-        console.log("Datos no validos para ingresar.")
+        console.log("Datos no validos para ingresar.");
       }
-      
-
-      
     }
   }
 };
@@ -166,7 +160,7 @@ h2 {
   font-size: 40px;
 }
 
-h3{
+h3 {
   font-family: "Montserrat";
   color: gray;
   margin-bottom: 20px;
@@ -197,7 +191,7 @@ h3{
 }
 
 #socialRow {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 .button {
