@@ -19,6 +19,7 @@
 
 <script>
 import { mapMutations } from "vuex";
+import { mapState } from "vuex";
 import axios from "axios";
 
 export default {
@@ -28,15 +29,23 @@ export default {
       busqueda: ""
     };
   },
+  computed: {
+    ...mapState(["userData"] )
+
+  },
   methods: {
     ...mapMutations(["SET_MAP_RESULT"]),
     search() {
       //Obtencion de datos
+      console.log(this.userData.user.id);
+      console.log(this.userData.token);
       axios
-        .get("http://localhost:3000/busqueda/", {
-          params: {
-            search: this.busqueda
-          }
+        .get("http://localhost:3000/lugares/getplaces", {
+          id: this.userData.user.id,
+          
+          headers: {
+            authorization: this.userData.token,
+          },
         })
         .then(response => {
           this.SET_MAP_RESULT(response.data.data);

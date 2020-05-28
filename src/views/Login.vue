@@ -79,7 +79,7 @@ export default {
     }
   }),
   methods: {
-    ...mapMutations(["SET_TOKEN"]),
+    ...mapMutations(["SET_DATA"]),
     login() {
       if (/.+@.+\..+/.test(this.email) && this.password.length >= 8) {
         console.log("Datos validos");
@@ -89,7 +89,7 @@ export default {
             password: this.password
           })
           .then(response => {
-            this.SET_TOKEN(response.data.data.token);
+            this.SET_DATA(response.data.data);
             this.$router.push({ name: "Home" });
           })
           .catch(error => {
