@@ -66,7 +66,7 @@ export default {
     ...mapState(["isLogged"]),
   },
   methods: {
-    ...mapMutations(["SET_DATA","SET_LOGGED"]),
+    ...mapMutations(["SET_DATA","SET_LOGGED","SET_MAP_RESULT"]),
     logout() {
       this.SET_DATA({});
       this.SET_LOGGED(false);
@@ -77,6 +77,7 @@ export default {
     },
     navigation() {
         if (this.actionName == "Home") {
+            this.SET_MAP_RESULT({});
             this.$router.push({ name: "Home" });
         } else {
             this.$router.push({ name: "MyPlaces" });

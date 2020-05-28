@@ -1,15 +1,15 @@
 <template lang="html">
-        <v-card :color="place.color" :place="place" :i="i" dark >
+        <v-card :color="place.color" :place="place" dark >
           <div class="d-flex flex-no-wrap justify-space-between">
             <div>
               <v-card-title class="headline" v-text="place.name"></v-card-title>
               <v-card-subtitle v-text="place.dir"></v-card-subtitle>
               <v-card-actions>
-                <v-btn text @click="seleccionar(i)">{{btn}}</v-btn>
+                <v-btn text @click="seleccionar()">{{btn}}</v-btn>
               </v-card-actions>
 
 
-              <v-card-text v-if="selected" :id="i.lat">
+              <v-card-text v-if="selected" >
                 <v-row align="center" class="mx-0">
                   <v-rating
                     :value="place.rank"
@@ -27,9 +27,7 @@
                 </div>
 
                 <div>{{place.desc}}</div>
-                <v-card-actions>
-                <v-btn text @click="seleccionar(i)" id="btn">Eliminar</v-btn>
-              </v-card-actions>
+                
               </v-card-text>
 
 
@@ -46,36 +44,31 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { mapMutations } from "vuex";
+import { mapMutations, mapState } from "vuex";
 
 export default {
   name: "CardPlace",
   data() {
     return {
       selected: false,
-      lat: "",
-      long: "",
       btn: "Ver más",
     }
   },
   props: [
     "place",
-    "i"
   ],
-  computed: {
-    ...mapState(["mapResult"] )
-
-  },
   watch: {
     mapResult() {
       this.selected = false;
       this.btn = "Ver más";
     }
   },
+  computed: {
+    ...mapState(["userData"] )
+  },
   methods: {
     ...mapMutations(["SET_MAP_PIN"]),
-    seleccionar(aux) {
+    seleccionar() {
       if (this.selected) {
         this.selected = false;
         this.btn = "Ver más";
@@ -83,15 +76,14 @@ export default {
         this.selected = true;
         this.btn = "Ver menos";
       }
-
       var myJSON = [
         {
-          lat: this.mapResult[aux].lat,
-          long: this.mapResult[aux].long
+          lat: this.place.lat,
+          long: this.place.long
         }
       ];
       this.SET_MAP_PIN(myJSON);
-    }
+    },
   }
 };
 </script>

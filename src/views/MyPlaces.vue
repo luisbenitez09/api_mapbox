@@ -2,15 +2,15 @@
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app >
       <v-list dense>
-        <template v-for="item in items">
+        <template v-for="place in mapResult">
           
-          <v-list-item  :key="item.text" link >
+          <v-list-item  :key="place.name" link >
             <v-list-item-action>
               <v-icon>mdi-map-marker</v-icon>
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title>
-                {{ item.text }}
+                {{ place.name }}
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -136,6 +136,9 @@
 
 <script>
 import AppBar from './../components/AppBar'
+import { mapMutations } from "vuex";
+import axios from 'axios'
+import { mapState } from 'vuex'
 
   export default {
     props: {
@@ -151,8 +154,31 @@ import AppBar from './../components/AppBar'
         
       ],
     }),
+    methods: {
+      ...mapMutations(["SET_MAP_RESULT"]),
+    },
+    computed: {
+    ...mapState(["userData","mapResult"] ),
+  },
     mounted() {
-
+      
+      axios
+        .get("http://localhost:3000/lugares/getplacesFiltered", {
+          params: {
+            search: this.busqueda,
+            id: this.userData.user.id,
+          },
+          headers: {
+            authorization: this.userData.token,
+          },
+        })
+        .then(response => {
+          this.SET_MAP_RESULT(response.data.data);
+          console.log(response.data.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     },
     components: {
         AppBar,

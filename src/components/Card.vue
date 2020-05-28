@@ -38,7 +38,6 @@
       <v-col v-for="(place, i) in mapResult" :key="i" cols="12" >
         <CardPlace
           :place="place"
-          :i="i"
         >
         </CardPlace>
       </v-col>
