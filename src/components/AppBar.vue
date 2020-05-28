@@ -30,11 +30,14 @@
         </template>
 
         <v-list>
-          <v-list-item @click="navigation">
+          <v-list-item @click="navigation" v-if="isLogged">
             <v-list-item-title>{{ actionName }}</v-list-item-title>
           </v-list-item>
-          <v-list-item @click="logout">
-            <v-list-item-title>Log Out</v-list-item-title>
+          <v-list-item @click="logout" v-if="isLogged">
+            <v-list-item-title>LogOut</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="login" v-else>
+            <v-list-item-title>LogIn</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -42,13 +45,13 @@
 </template>
 <script>
 import Searchbar from "./Searchbar";
-import { mapMutations } from "vuex";
+import { mapMutations, mapState } from "vuex";
 
 export default {
   name: "AppBar",
   data () {
       return {
-        drawer: null
+        
       }
   },
   components: {
@@ -59,10 +62,17 @@ export default {
     "color",
     "actionName",
   ],
+  computed: {
+    ...mapState(["isLogged"]),
+  },
   methods: {
-    ...mapMutations(["SET_DATA"]),
+    ...mapMutations(["SET_DATA","SET_LOGGED"]),
     logout() {
       this.SET_DATA({});
+      this.SET_LOGGED(false);
+      this.$router.push({ name: "Home" });
+    },
+    login() {
       this.$router.push({ name: "Login" });
     },
     navigation() {

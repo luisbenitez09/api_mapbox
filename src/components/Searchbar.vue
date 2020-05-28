@@ -37,12 +37,11 @@ export default {
     ...mapMutations(["SET_MAP_RESULT"]),
     search() {
       //Obtencion de datos
-      console.log(this.userData.user.id);
-      console.log(this.userData.token);
       axios
         .get("http://localhost:3000/lugares/getplaces", {
-          id: this.userData.user.id,
-          
+          params: {
+            search: this.busqueda,
+          },
           headers: {
             authorization: this.userData.token,
           },
