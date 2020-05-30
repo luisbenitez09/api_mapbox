@@ -66,11 +66,15 @@ export default {
     ...mapState(["isLogged"]),
   },
   methods: {
-    ...mapMutations(["SET_DATA","SET_LOGGED","SET_LOGGED_AREA","SET_MAP_RESULT"]),
+    ...mapMutations(["SET_DATA","SET_LOGGED","SET_LOGGED_AREA","SET_MAP_RESULT","SET_MAP_PIN","SET_WIDGET","SET_PLACE_SELECTED"]),
     logout() {
       this.SET_DATA({});
+      this.SET_MAP_RESULT({});
+      this.SET_MAP_PIN({});
+      this.SET_WIDGET(true);
       this.SET_LOGGED(false);
       this.SET_LOGGED_AREA(false);
+      this.SET_PLACE_SELECTED(null);
       this.$router.push({ name: "Home" });
     },
     login() {
@@ -79,7 +83,10 @@ export default {
     navigation() {
         if (this.actionName == "Home") {
             this.SET_MAP_RESULT({});
+            this.SET_MAP_PIN({});
+            this.SET_WIDGET(true);
             this.SET_LOGGED_AREA(false);
+            this.SET_PLACE_SELECTED(null);
             this.$router.push({ name: "Home" });
         } else {
             this.$router.push({ name: "MyPlaces" });

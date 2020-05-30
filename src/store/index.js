@@ -10,7 +10,8 @@ export default new Vuex.Store({
     weatherWidget: true,
     userData: {},
     isLogged: false,
-    loggedArea: false
+    loggedArea: false,
+    placeSelected: null,
   },
   mutations: {
     SET_MAP_RESULT(state, payload) {
@@ -35,6 +36,9 @@ export default new Vuex.Store({
     SET_LOGGED_AREA(state, payload) {
       state.loggedArea = payload;
     },
+    SET_PLACE_SELECTED(state, payload) {
+      state.placeSelected = payload;
+    }
   },
   actions: {
   },
