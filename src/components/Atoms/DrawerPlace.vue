@@ -16,10 +16,17 @@ export default {
 
   props: ["place"],
   methods: {
-    ...mapMutations(["SET_PLACE_SELECTED"]),
+    ...mapMutations(["SET_PLACE_SELECTED", "SET_MAP_PIN"]),
     test() {
       this.SET_PLACE_SELECTED(this.place);
-      console.log(this.place);
+
+      var myJSON = [
+        {
+          lat: this.place.lat,
+          long: this.place.long
+        }
+      ];
+      this.SET_MAP_PIN(myJSON);
     }
   }
 };

@@ -11,7 +11,7 @@ export default new Vuex.Store({
     userData: {},
     isLogged: false,
     loggedArea: false,
-    placeSelected: null,
+    placeSelected: {},
   },
   mutations: {
     SET_MAP_RESULT(state, payload) {

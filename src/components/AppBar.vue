@@ -74,7 +74,7 @@ export default {
       this.SET_WIDGET(true);
       this.SET_LOGGED(false);
       this.SET_LOGGED_AREA(false);
-      this.SET_PLACE_SELECTED(null);
+      this.SET_PLACE_SELECTED({});
       this.$router.push({ name: "Home" });
     },
     login() {
@@ -86,8 +86,9 @@ export default {
             this.SET_MAP_PIN({});
             this.SET_WIDGET(true);
             this.SET_LOGGED_AREA(false);
-            this.SET_PLACE_SELECTED(null);
+            this.SET_PLACE_SELECTED({});
             this.$router.push({ name: "Home" });
+            this.$forceUpdate();
         } else {
             this.$router.push({ name: "MyPlaces" });
         }

@@ -10,7 +10,7 @@
 
     <AppBar name="My Places" color="#181e2c" actionName="Home" />
 
-    <v-content v-if="placeSelected">
+    <v-content >
       <v-container class="fill-height" fluid>
         <v-col cols="10">
           <v-row>
@@ -44,6 +44,7 @@
                 empty-icon="mdi-currency-usd-off"
                 full-icon="mdi-currency-usd"
                 readonly
+                hover
                 color="green"
                 background-color=""
               ></v-rating>
@@ -67,6 +68,8 @@
                 v-model="rank"
                 v-if="!edit"
                 readonly
+                hover
+                half-increments=""
                 length="5"
                 color="yellow darken-2"
                 background-color=""
@@ -74,8 +77,9 @@
               <v-rating
                 v-model="rank"
                 v-if="edit"
-                hover
                 length="5"
+                hover
+                half-increments=""
                 color="yellow darken-2"
                 background-color=""
               ></v-rating>
@@ -138,7 +142,7 @@
             <v-col cols="12">
               <v-label>Location</v-label>
               <v-container id="mapCont">
-                <div id="map"></div>
+                <div class ="maps" id="map"></div>
               </v-container>
             </v-col>
           </v-row>
@@ -146,12 +150,12 @@
 
         <v-col cols="2" align-self="start">
           <v-row align="start">
-            <v-btn color="#167ec5" block dark v-if="!edit" @click="edit = !edit">Edit</v-btn>
-            <v-btn color="#167ec5" block dark v-if="edit" @click="edit = !edit">Cancel</v-btn>
-            <v-btn color="success" block dark v-if="edit" style="margin-top: 15px">Save</v-btn>
+            <v-btn color="#167ec5" block dark v-if="!edit" @click="editar">Edit</v-btn>
+            <v-btn color="#167ec5" block dark v-if="edit" @click="cancelar">Cancel</v-btn>
+            <v-btn color="success" block dark v-if="edit" @click="save" style="margin-top: 15px">Save</v-btn>
           </v-row>
           <v-row style="margin-top: 15px" align="start">
-            <v-btn color="red darken-1" block dark @click="deletePlace">Delete</v-btn>
+            <v-btn color="red darken-1" block dark @click="deleteDialog = !deleteDialog">Delete</v-btn>
           </v-row>
         </v-col>
       </v-container>
@@ -162,6 +166,7 @@
     </v-btn>
 
     <AddPlace v-if="dialog"></AddPlace>
+    <DeleteDialog v-if="deleteDialog"></DeleteDialog>
   </v-app>
 </template>
 
@@ -169,6 +174,7 @@
 import AppBar from "./../components/AppBar";
 import AddPlace from "./../components/AddPlace";
 import DrawerPlace from "./../components/Atoms/DrawerPlace";
+import DeleteDialog from "./../components/Atoms/DeleteDialog";
 import { mapMutations, mapState } from "vuex";
 import "mapbox-gl/dist/mapbox-gl.css";
 import axios from "axios";
@@ -181,56 +187,121 @@ export default {
   props: {
     source: String
   },
-  data: () => ({
-    dialog: false,
-    drawer: null,
-    name: "",
-    cats: "",
-    price: 0,
-    rank: 0,
-    address: "",
-    desc: "",
-    image: null,
-    color: "",
-    lat: "",
-    long: "",
-    marker: new mapboxgl.Marker(),
-    edit: false
-  }),
+  data () {
+    return {
+      dialog: false,
+      deleteDialog: false,
+      drawer: null,
+      name: "",
+      cats: "",
+      price: 3,
+      rank: 3,
+      address: "",
+      desc: "",
+      image: null,
+      color: "",
+      lat: "",
+      long: "",
+      map: null,
+      marker: new mapboxgl.Marker(),
+      edit: false
+    }
+  },
   methods: {
-    ...mapMutations(["SET_MAP_RESULT", "SET_LOGGED_AREA", "SET_PLACE_SELECTED"]),
-    deletePlace() {
-      console.log(this.userData.token);
-      axios
-        .put("http://localhost:3000/lugares/delete", 
-        {
-          id: this.placeSelected.id,
-        },
-        {
-          headers: {
-            authorization: this.userData.token
-          }
+    ...mapMutations(["SET_MAP_RESULT", "SET_LOGGED_AREA", "SET_PLACE_SELECTED", "SET_MAP_PIN"]),
+    
+    save() {
+      this.$forceUpdate();
+    },
+    editar() {
+      this.edit = !this.edit;
+
+      this.map.on('click', e => {
+        this.marker.remove();
+
+        var latitud = JSON.stringify(e.lngLat.lat);
+        var longitud = JSON.stringify(e.lngLat.lng);
+
+        this.marker = new mapboxgl.Marker({
+            draggable: false,
+            color: "red",
+            anchor: 'left',
         })
-        .then(response => {
-          console.log(response);
-          this.$forceUpdate();
-        })
-        .catch(error => {
-          console.log(error);
+        .setLngLat([longitud,latitud])
+        .addTo(this.map);
+
+        this.map.flyTo({
+          center: [longitud, latitud],
+          zoom: 15,
         });
+        
+        var myJSON = [
+            {
+                lat: latitud,
+                long: longitud,
+            }
+        ];
+        this.SET_MAP_PIN(myJSON);
+      })
+    },
+    cancelar() {
+      this.edit = !this.edit;
+
+      this.map = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/lbenitez/ck80nhopu0yu61ipeuegtbt63"
+      });
+      this.map.addControl(new mapboxgl.NavigationControl());
+
+      
+      this.marker = new mapboxgl.Marker({
+            draggable: false,
+            color: "red",
+            anchor: 'left',
+        })
+        .setLngLat([this.long,this.lat])
+        .addTo(this.map);
+
+        this.map.flyTo({
+          center: [this.long, this.lat],
+          zoom: 15,
+        });
+        
     }
   },
   computed: {
-    ...mapState(["userData", "mapResult", "placeSelected"])
+    ...mapState(["userData", "mapResult", "placeSelected", "mapPin"])
   },
   watch: {
-    placeSelected() {
+    mapPin() {
       this.name = this.placeSelected.name;
       this.cats = this.placeSelected.cat;
       this.address = this.placeSelected.dir;
       this.desc = this.placeSelected.desc;
+      this.color = this.placeSelected.color;
       this.price = this.placeSelected.price;
       this.rank = this.placeSelected.rank;
+      this.lat = this.placeSelected.lat;
+      this.long = this.placeSelected.long;
+      
+
+      this.marker.remove();
+        this.marker = new mapboxgl.Marker({
+          draggable: false,
+          color: "red",
+          anchor: 'left'
+
+        })
+        .setLngLat([this.mapPin[0].long,this.mapPin[0].lat])
+        .addTo(this.map);
+
+        this.map.flyTo({
+          center: [this.mapPin[0].long,this.mapPin[0].lat],
+          zoom: 15
+        });
+    },
+    mapResult() {
+
     }
   },
   mounted() {
@@ -238,7 +309,7 @@ export default {
     axios
       .get("http://localhost:3000/lugares/getplacesFiltered", {
         params: {
-          search: this.busqueda,
+          search: "",
           id: this.userData.user.id
         },
         headers: {
@@ -253,7 +324,7 @@ export default {
         console.log(error);
       });
 
-      console.log(this.mapResult);
+      
 
     this.map = new mapboxgl.Map({
       container: "map",
@@ -264,12 +335,13 @@ export default {
   components: {
     AppBar,
     AddPlace,
-    DrawerPlace
+    DrawerPlace,
+    DeleteDialog,
   }
 };
 </script>
 <style lang="css">
-#mapCont {
+#map {
   width: 50vw;
   height: 50vh;
 }

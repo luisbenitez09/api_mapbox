@@ -125,7 +125,7 @@ export default {
     },
     methods: {
         add() {
-            console.log(this.image);
+            
         }
     },
 }
