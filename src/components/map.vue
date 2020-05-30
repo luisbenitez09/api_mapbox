@@ -8,6 +8,7 @@
 
   var mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
   mapboxgl.accessToken = 'pk.eyJ1IjoibGJlbml0ZXoiLCJhIjoiY2szdHU1czY0MDFpdTNsdDQwOGxuNHJyOSJ9.tEeMwOIWSuwmQF4eDcDrsw';
+  
   export default {
     name: "mapa",
     props:["id"],

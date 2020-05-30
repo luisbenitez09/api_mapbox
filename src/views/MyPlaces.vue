@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app >
+    <v-navigation-drawer v-model="drawer" :clipped="$vuetify.breakpoint.lgAndUp" app dark >
       <v-list dense>
         <template v-for="place in mapResult">
           
@@ -19,126 +19,36 @@
       </v-list>
     </v-navigation-drawer>
 
-
-
-
-
     <AppBar
       name="My Places"
       color="#181e2c"
       actionName="Home"
     />
 
-
-
-
-
     <v-content>
-      <v-container class="fill-height" fluid >
+      <v-container class="fill-height" fluid>
         
       </v-container>
     </v-content>
-    <v-btn
-      bottom
-      color="pink"
-      dark
-      fab
-      fixed
-      right
-      @click="dialog = !dialog"
-    >
+
+    <v-btn bottom color="#167ec5" dark fab fixed right
+      @click="dialog = !dialog">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
-    <v-dialog
-      v-model="dialog"
-      width="800px"
-    >
-      <v-card>
-        <v-card-title class="grey darken-2">
-          Create contact
-        </v-card-title>
-        <v-container>
-          <v-row class="mx-2">
-            <v-col
-              class="align-center justify-space-between"
-              cols="12"
-            >
-              <v-row
-                align="center"
-                class="mr-0"
-              >
-                <v-avatar
-                  size="40px"
-                  class="mx-3"
-                >
-                  <img
-                    src="//ssl.gstatic.com/s2/oz/images/sge/grey_silhouette.png"
-                    alt=""
-                  >
-                </v-avatar>
-                <v-text-field
-                  placeholder="Name"
-                ></v-text-field>
-              </v-row>
-            </v-col>
-            <v-col cols="6">
-              <v-text-field
-                prepend-icon="mdi-account-card-details-outline"
-                placeholder="Company"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="6">
-              <v-text-field
-                placeholder="Job title"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                prepend-icon="mdi-mail"
-                placeholder="Email"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                type="tel"
-                prepend-icon="mdi-phone"
-                placeholder="(000) 000 - 0000"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                prepend-icon="mdi-text"
-                placeholder="Notes"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-        </v-container>
-        <v-card-actions>
-          <v-btn
-            text
-            color="primary"
-          >More</v-btn>
-          <v-spacer></v-spacer>
-          <v-btn
-            text
-            color="primary"
-            @click="dialog = false"
-          >Cancel</v-btn>
-          <v-btn
-            text
-            @click="dialog = false"
-          >Save</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+
+    <AddPlace
+      v-if="dialog"
+    ></AddPlace>
+    
   </v-app>
 </template>
 
 <script>
 import AppBar from './../components/AppBar'
+import AddPlace from './../components/AddPlace'
 import { mapMutations } from "vuex";
-import axios from 'axios'
 import { mapState } from 'vuex'
+import axios from 'axios'
 
   export default {
     props: {
@@ -147,21 +57,15 @@ import { mapState } from 'vuex'
     data: () => ({
       dialog: false,
       drawer: null,
-      items: [
-        { text: 'Contacts' },
-        { text: 'Frequently contacted' },
-        { text: 'Duplicates' },
-        
-      ],
     }),
     methods: {
-      ...mapMutations(["SET_MAP_RESULT"]),
+      ...mapMutations(["SET_MAP_RESULT", "SET_LOGGED_AREA"]),
     },
     computed: {
     ...mapState(["userData","mapResult"] ),
   },
     mounted() {
-      
+      this.SET_LOGGED_AREA(true);
       axios
         .get("http://localhost:3000/lugares/getplacesFiltered", {
           params: {
@@ -182,6 +86,7 @@ import { mapState } from 'vuex'
     },
     components: {
         AppBar,
+        AddPlace
     }
   }
 </script>
