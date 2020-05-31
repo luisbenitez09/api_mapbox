@@ -211,7 +211,34 @@ export default {
     ...mapMutations(["SET_MAP_RESULT", "SET_LOGGED_AREA", "SET_PLACE_SELECTED", "SET_MAP_PIN"]),
     
     save() {
-      this.$forceUpdate();
+      axios
+        .put("http://localhost:3000/lugares/updatePlace", 
+        {
+          id: this.placeSelected.id,
+          name: this.name ,
+          lat: this.lat ,
+          long: this.long ,
+          dir: this.address ,
+          color: this.color ,
+          img: this.image.name ,
+          rank: this.rank ,
+          price: this.price ,
+          cat: this.cats ,
+          desc: this.desc ,
+        },
+        {
+          headers: {
+            authorization: this.userData.token
+          }
+        })
+        .then(response => {
+          console.log(response);
+          this.$forceUpdate();
+        })
+        .catch(error => {
+          console.log(error);
+        });
+        this.edit =false;
     },
     editar() {
       this.edit = !this.edit;
@@ -281,8 +308,8 @@ export default {
       this.color = this.placeSelected.color;
       this.price = this.placeSelected.price;
       this.rank = this.placeSelected.rank;
-      this.lat = this.placeSelected.lat;
-      this.long = this.placeSelected.long;
+      this.lat = this.mapPin[0].lat
+      this.long = this.mapPin[0].long;
       
 
       this.marker.remove();

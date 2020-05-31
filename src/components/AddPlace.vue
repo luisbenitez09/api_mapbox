@@ -93,6 +93,7 @@
 <script>
 import { mapState } from 'vuex'
 import addMap from './Atoms/AddMap'
+import axios  from 'axios'
 
 export default {
     name: "AddPlace",
@@ -111,11 +112,14 @@ export default {
             image: null,
             color: "",
             lat: "",
-            long: ""
+            long: "",
+            fieldRules: {
+              required: value => !!value || "Required!"
+            },
         }
     },
     computed: {
-      ...mapState(["mapPin"])
+      ...mapState(["mapPin","userData"])
     },
     watch: {
         mapPin() {
@@ -125,7 +129,30 @@ export default {
     },
     methods: {
         add() {
-            
+          console.log(this.userData.user.id);
+            axios
+            .post("http://localhost:3000/lugares/createPlace", {
+              name: this.name,
+              lat: this.lat,
+              long: this.long,
+              dir: this.address,
+              color: this.color,
+              img: this.image.name,
+              rank: this.rank,
+              price: this.price,
+              cat: this.cats,
+              desc: this.desc,
+              userId: this.userData.user.id,
+            },
+            {
+              headers: {
+                authorization: this.userData.token,
+              }
+            })
+            .catch(error => {
+              console.log(error);
+            });
+            this.dialog = false;
         }
     },
 }
