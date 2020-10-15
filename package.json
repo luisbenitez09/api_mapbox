@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "babel": "^6.23.0",
     "core-js": "^3.6.4",
     "mapbox-gl": "^1.10.1",
     "vue": "^2.6.11",
